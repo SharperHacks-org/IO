@@ -1,4 +1,4 @@
-@rem Copyright (c) Joseph W Donahue and SharperHacks LLC
+@rem Copyright (c) Joseph W Donahue and Sharper Hacks LLC
 @rem Licensed under the terms of the MIT license (https://opensource.org/licenses/MIT).
 @rem Contact: coders@sharperhacks.com
 

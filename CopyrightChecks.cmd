@@ -1,4 +1,4 @@
-@rem Copyright Joseph W Donahue and SharperHacks LLC (US-WA)
+@rem Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
 @rem
 @rem Licensed under the Apache License, Version 2.0 (the "License");
 @rem you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 @rem See the License for the specific language governing permissions and
 @rem limitations under the License.
 @rem
-@rem SharperHacks is a trademark of SharperHacks LLC (US-Wa), and may not be
+@rem SharperHacks is a trademark of Sharper Hacks LLC (US-Wa), and may not be
 @rem applied to distributions of derivative works, without the express written
-@rem permission of a registered officer of SharperHacks LLC (US-WA).
+@rem permission of a registered officer of Sharper Hacks LLC (US-WA).
 
 @setlocal EnableExtensions
 @set prompt=$G
@@ -23,7 +23,7 @@
 @call :SetFQDP _gitDir=%~dp0\.git
 @call :SetFQDP _logDir=%~dp0\.Logs
 
-@set _crl1="// Copyright Joseph W Donahue and SharperHacks LLC"
+@set _crl1="// Copyright Joseph W Donahue and Sharper Hacks LLC"
 @set _crl2="// Licensed under the Apache License, Version 2.0"
 
 @set _finalExitCode=0

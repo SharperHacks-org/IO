@@ -1,4 +1,4 @@
-// Copyright Joseph W Donahue and SharperHacks LLC (US-WA)
+// Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// SharperHacks is a trademark of SharperHacks LLC (US-Wa), and may not be
+// SharperHacks is a trademark of Sharper Hacks LLC (US-Wa), and may not be
 // applied to distributions of derivative works, without the express written
-// permission of a registered officer of SharperHacks LLC (US-WA).
+// permission of a registered officer of Sharper Hacks LLC (US-WA).
 
 using System.Diagnostics.CodeAnalysis;
 
