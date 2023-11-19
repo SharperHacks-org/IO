@@ -17,7 +17,7 @@
 // permission of a registered officer of Sharper Hacks LLC (US-WA).
 
 
-using SharperHacks.Constraints;
+using SharperHacks.CoreLibs.Constraints;
 
 namespace SharperHacks.IO;
 

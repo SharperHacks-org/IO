@@ -21,7 +21,7 @@ using System.Text;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SharperHacks.Constraints;
+using SharperHacks.CoreLibs.Constraints;
 
 namespace SharperHacks.IO.UnitTests;
 

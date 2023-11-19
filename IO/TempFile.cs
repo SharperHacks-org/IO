@@ -19,7 +19,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-using SharperHacks.Constraints;
+using SharperHacks.CoreLibs.Constraints;
 
 namespace SharperHacks.IO;
 

@@ -1,0 +1,69 @@
+[1mdiff --git a/IO/IO.csproj b/IO/IO.csproj[m
+[1mindex 53118c4..a559b93 100644[m
+[1m--- a/IO/IO.csproj[m
+[1m+++ b/IO/IO.csproj[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-﻿<Project Sdk="Microsoft.NET.Sdk">[m
+[32m+[m[32m<Project Sdk="Microsoft.NET.Sdk">[m[41m[m
+ [m
+   <PropertyGroup>[m
+     <Authors>Joseph W Donahue</Authors>[m
+[36m@@ -7,30 +7,29 @@[m
+   </PropertyGroup>[m
+ [m
+   <PropertyGroup>[m
+[31m-    <Description>Defines classes and methods to facilitate I/O.</Description>[m
+[32m+[m[32m    <Description>Defines classes and methods to verify runtime contraints are met.</Description>[m[41m[m
+     <AssemblyName>SharperHacks.CoreLibs.$(MSBuildProjectName)</AssemblyName>[m
+     <RootNamespace>SharperHacks.CoreLibs.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>[m
+     <GenerateDocumentationFile>True</GenerateDocumentationFile>[m
+     <NeutralLanguage>en-US</NeutralLanguage>[m
+     <AssemblyVersion>0.0.0.0</AssemblyVersion>[m
+     <FileVersion>0.0.0.0</FileVersion>[m
+[31m-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>[m
+[31m-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>[m
+[31m-    <PackageReadMeFile>README.md</PackageReadMeFile>[m
+[31m-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>[m
+     <Title>$(AssemblyName)</Title>[m
+   </PropertyGroup>[m
+ [m
+   <PropertyGroup>[m
+     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>[m
+     <EnableNETAnalyzers>True</EnableNETAnalyzers>[m
+[31m-    <ImplicitUsings>enable</ImplicitUsings>[m
+[32m+[m[32m    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>[m[41m[m
+     <IncludeSymbols>True</IncludeSymbols>[m
+     <PackageIcon>SHLLC-Logo.128.100.jpg</PackageIcon>[m
+[31m-    <PackageProjectUrl>https://github.com/SharperHacks-org/IO</PackageProjectUrl>[m
+[31m-    <PackageTags>IO</PackageTags>[m
+[32m+[m[32m    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>[m[41m[m
+[32m+[m[32m    <PackageProjectUrl>https://github.com/SharperHacks-org/$(MSBuildProjectName)</PackageProjectUrl>[m[41m[m
+[32m+[m[32m    <PackageReadMeFile>README.md</PackageReadMeFile>[m[41m[m
+[32m+[m[32m    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>[m[41m[m
+[32m+[m[32m    <PackageTags>Constraints</PackageTags>[m[41m[m
+     <RepositoryType>git</RepositoryType>[m
+[31m-    <RepositoryUrl>https://ghihub.com/SharperHacks-org/IO</RepositoryUrl>[m
+[32m+[m[32m    <RepositoryUrl>https://ghihub.com/SharperHacks-org/$(MSBuildProjectName)</RepositoryUrl>[m[41m[m
+     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>[m
+     <SymbolPackageFormat>snupkg</SymbolPackageFormat>[m
+     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>[m
+[36m@@ -39,8 +38,9 @@[m
+   <PropertyGroup>[m
+     <AnalysisLevel>latest-recommended</AnalysisLevel>[m
+     <Deterministic>true</Deterministic>[m
+[32m+[m[32m    <ImplicitUsings>enable</ImplicitUsings>[m[41m[m
+     <Nullable>enable</Nullable>[m
+[31m-    <PathMap>$(MSBuildThisFileDirectory)={SHLLC/CoreLibs/IO}/</PathMap>[m
+[32m+[m[32m    <PathMap>$(MSBuildThisFileDirectory)={SHLLC/CoreLibs/Reflection}/</PathMap>[m[41m[m
+   </PropertyGroup>[m
+ [m
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">[m
+[36m@@ -52,7 +52,7 @@[m
+   </PropertyGroup>[m
+ [m
+   <ItemGroup>[m
+[31m-    <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="1.0.0" />[m
+[32m+[m[32m    <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="2.0.0" />[m[41m[m
+   </ItemGroup>[m
+   [m
+   <ItemGroup>[m
