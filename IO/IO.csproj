@@ -27,7 +27,7 @@
     <PackageProjectUrl>https://github.com/SharperHacks-org/$(MSBuildProjectName)</PackageProjectUrl>
     <PackageReadMeFile>README.md</PackageReadMeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageTags>Constraints</PackageTags>
+    <PackageTags>IO</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://ghihub.com/SharperHacks-org/$(MSBuildProjectName)</RepositoryUrl>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
