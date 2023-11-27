@@ -1,5 +1,5 @@
 ![SharperHacks logo](SHLLC-Logo.jpg)
-# Constraints Library for .NET
+# IO Library for .NET
 ## SharperHacks.IO.
 
 Defines classes and methods to facilitate I/O
