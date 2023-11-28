@@ -22,7 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="2.0.0" />
-    <PackageReference Include="SharperHacks.CoreLibs.Reflection" Version="2.0.0" />
+    <PackageReference Include="SharperHacks.CoreLibs.Reflection" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
