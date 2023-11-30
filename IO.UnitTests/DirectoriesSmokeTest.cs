@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharperHacks.IO.UnitTests;
+namespace SharperHacks.CoreLibs.IO.UnitTests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]

@@ -19,7 +19,7 @@
 
 using SharperHacks.CoreLibs.Constraints;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// File search pattern container and file enumerators.

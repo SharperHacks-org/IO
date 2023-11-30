@@ -20,7 +20,7 @@ using System.Text;
 
 using SharperHacks.CoreLibs.Constraints;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Provides static numbered file creation method.

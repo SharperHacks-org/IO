@@ -20,7 +20,7 @@ using SharperHacks.CoreLibs.Constraints;
 
 using System.Globalization;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Miscellaneous file related helper functions used by some SharperHacks.IO classes.

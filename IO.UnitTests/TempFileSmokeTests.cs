@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SharperHacks.CoreLibs.Constraints;
 
-namespace SharperHacks.IO.UnitTests;
+namespace SharperHacks.CoreLibs.IO.UnitTests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]

@@ -18,7 +18,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Console output redirection wrapper with IDisposable implementation.

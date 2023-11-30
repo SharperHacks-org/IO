@@ -16,7 +16,7 @@
 // applied to distributions of derivative works, without the express written
 // permission of a registered officer of Sharper Hacks LLC (US-WA).
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 // TODO: Figure out how to improve, optimize and asynchronize this, when .NET has proper glob star support.
 // TODO: Add a cache?

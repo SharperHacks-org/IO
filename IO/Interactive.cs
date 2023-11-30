@@ -18,7 +18,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Interactive class wraps some common user I/O interactions.

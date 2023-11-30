@@ -18,7 +18,7 @@
 
 using SharperHacks.CoreLibs.Constraints;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Uses a file as a semaphore between threads and processes.

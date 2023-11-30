@@ -20,7 +20,7 @@ using SharperHacks.CoreLibs.Constraints;
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharperHacks.IO;
+namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
 /// Manages lifetime of temporary directories with Path.GetTempPath() at their root.
