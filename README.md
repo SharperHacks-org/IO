@@ -11,7 +11,6 @@ Contact: joseph@sharperhacks.org
 Nuget: https://www.nuget.org/packages/SharperHacks.CoreLibs.IO
 
 ### Targets
-- net6.0
 - net7.0
 - net8.0
 
