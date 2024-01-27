@@ -1,6 +1,6 @@
 ![SharperHacks logo](SHLLC-Logo.jpg)
 # IO Library for .NET
-## SharperHacks.IO.
+## SharperHacks.CoreLibs.IO
 
 Defines classes and methods to facilitate I/O
 

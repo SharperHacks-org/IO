@@ -1,25 +1,8 @@
-// Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// SharperHacks is a trademark of Sharper Hacks LLC (US-Wa), and may not be
-// applied to distributions of derivative works, without the express written
-// permission of a registered officer of Sharper Hacks LLC (US-WA).
-
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
+// Copyright and trademark notices at the end of this file.
 
 using SharperHacks.CoreLibs.Constraints;
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace SharperHacks.CoreLibs.IO;
 
@@ -221,8 +204,8 @@ public class TempFile : IDisposable
     #region Private
 
     private static (FileInfo, FileStream) CreateFile(
-            [NotNull] string prefix, 
-            [NotNull] string extension, 
+            string prefix, 
+            string extension, 
             string? path, 
             FileMode mode = FileMode.Create, 
             FileAccess access = FileAccess.ReadWrite, 
@@ -237,15 +220,14 @@ public class TempFile : IDisposable
 
         do
         {
-            var fileName = new StringBuilder(prefix);
-            _ = fileName.Append(Guid.NewGuid().ToString());
+            var fileName = prefix + Guid.NewGuid().ToString();
             if (extension.Length > 0)
             {
                 if (extension.First() != '.')
                 {
-                    _ = fileName.Append('.');
+                    fileName += '.';//_ = fileName.Append('.');
                 }
-                _ = fileName.Append(extension);
+                fileName += extension; // _ = fileName.Append(extension);
             }
             pathFileName = Path.Combine(path, fileName.ToString());
         } while (File.Exists(pathFileName));
@@ -259,3 +241,21 @@ public class TempFile : IDisposable
     #endregion Private
 
 }
+
+// Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SharperHacks is a trademark of Sharper Hacks LLC (US-Wa), and may not be
+// applied to distributions of derivative works, without the express written
+// permission of a registered officer of Sharper Hacks LLC (US-WA).
