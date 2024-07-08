@@ -19,6 +19,11 @@ public class CaptureConsoleOutput : IDisposable
     [NotNull]
     public string CapturedOutput => _stringWriter?.ToString() ?? string.Empty;
 
+    /// <summary>
+    /// Get the previous stream writer.
+    /// </summary>
+    public TextWriter PreviousWriter => _previousConsoleOut;
+
     #region Constructors
 
     /// <summary>
@@ -63,8 +68,9 @@ public class CaptureConsoleOutput : IDisposable
     private static ulong _nestedCounter;
 
     private StringWriter? _stringWriter;
-    private TextWriter? _previousConsoleOut;
+    private TextWriter _previousConsoleOut;
 
+    [MemberNotNull(nameof(_previousConsoleOut))]
     private void Initialize(int millisecondsToWait)
     {
 
@@ -98,6 +104,7 @@ public class CaptureConsoleOutput : IDisposable
         Redirect();
     }
 
+    [MemberNotNull(nameof(_previousConsoleOut))]
     private void Redirect()
     {
         // Redirect console output so we can capture it.

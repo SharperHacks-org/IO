@@ -1,6 +1,7 @@
 // Copyright and trademark notices at the end of this file.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography.X509Certificates;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -33,6 +34,7 @@ public class CaptureConsoleOutputSmokeTest
             {
                 var line1 = "Line 1.";
                 var line2 = "Line 2.";
+                var previousString = "Previous string.";
 
                 using (var captured = new CaptureConsoleOutput())
                 {
@@ -40,7 +42,15 @@ public class CaptureConsoleOutputSmokeTest
                     Console.WriteLine(line2);
                     Assert.IsTrue(captured.CapturedOutput.Contains(line1));
                     Assert.IsTrue(captured.CapturedOutput.Contains(line2));
+
+                    captured.PreviousWriter.WriteLine(previousString);
+                    Assert.IsTrue(sw.ToString().Contains(previousString));
                 }
+
+                const string inbetweenString = "Inbetween redirects";
+
+                Console.WriteLine(inbetweenString);
+                Assert.IsTrue(sw.ToString().Contains(inbetweenString));
 
                 using (var captured = new CaptureConsoleOutput(3000))
                 {
@@ -49,6 +59,10 @@ public class CaptureConsoleOutputSmokeTest
                     Assert.IsTrue(captured.CapturedOutput.Contains(line1));
                     Assert.IsTrue(captured.CapturedOutput.Contains(line2));
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
             }
             finally
             {
