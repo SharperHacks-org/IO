@@ -20,7 +20,7 @@ public class LockFile : IDisposable
     /// <param name="delayIncrementCount"></param>
     /// <param name="firstLoopDelay"></param>
     /// <param name="delayMultiplier"></param>
-    public LockFile( 
+    public LockFile(
             string pfn, 
             int maxMilliseconds = int.MaxValue,
             double delayIncrementCount = 3,
@@ -40,8 +40,8 @@ public class LockFile : IDisposable
             try
             {
                 _theFile = new FileStream(
-                        _theFileName, 
-                        FileMode.OpenOrCreate, 
+                        _theFileName,
+                        FileMode.OpenOrCreate,
                         FileAccess.ReadWrite,
                         FileShare.None);
 

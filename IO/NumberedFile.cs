@@ -21,17 +21,14 @@ public static class NumberedFile
     /// <param name="floor">Lowest number to try. Default 1.</param>
     /// <returns>FileStream</returns>
     public static FileStream IntegerAutoIncrementCreate(
-            string? path = null, 
-            string? name = null, 
+            string? path = null,
+            string? name = null,
             string? ext = null,
             string? sep = null,
             long floor = 1
             )
     {
         FileStream? result = null;
-
-//        string prefix = Path.Combine(path ?? string.Empty, name ?? string.Empty)
-//        long highestCurrentNumber = FileHelpers.HighestN(path, name + sep, '.' + ext);
 
         var pathFileName = BuildPathFileName(path, name, sep, floor, ext);
         Verify.IsNotNullOrEmpty(pathFileName);

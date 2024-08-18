@@ -128,8 +128,10 @@ public static class FileHelpers
     /// <param name="pattern"><see cref="HighestN(string)"/></param>
     /// <returns>(string prefix, string specifier, string postfix)</returns>
     /// <remarks>
+    /// <para>
     /// This helper written for the HighestN methods but there's no reason to hide it
     /// and it is easier for unit tests to test all code paths when it is public.
+    /// </para>
     /// </remarks>
     public static (string prefix, string specifier, string postfix) SplitPattern(string pattern)
     {
@@ -142,7 +144,7 @@ public static class FileHelpers
 
         // Get the prefix, if any...
         var currentIdx = pattern.IndexOf('{');
-        
+
         if (currentIdx == -1) throw new ArgumentException("Missing specifier.", nameof(pattern));
 
         if (currentIdx > 0)
