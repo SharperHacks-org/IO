@@ -35,13 +35,13 @@ public class Interactive
     /// Valid yes responses.
     /// </summary>
     [NotNull] public string[] ValidYesResponses { get; set; } = _validYesResponses;
-    private static string[] _validYesResponses = { "y", "yes" };
+    private static string[] _validYesResponses = ["y", "yes"];
 
     /// <summary>
     /// Valid no responses.
     /// </summary>
     [NotNull] public string[] ValidNoResponses { get; set; } = _validNoResponses;
-    private static string[] _validNoResponses = { "n", "no" };
+    private static string[] _validNoResponses = ["n", "no"];
 
     /// <summary>
     /// Invalid response prompt.

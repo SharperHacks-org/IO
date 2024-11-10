@@ -19,13 +19,17 @@ public class FileSearch
     #region Constructors
 
     /// <summary>
-    /// Default Constructor.
+    /// Default Constructor, using "*" for search pattern.
     /// </summary>
-    /// <param name="patterns">"*" is used if this empty.</param>
-    public FileSearch(params string[] patterns)
-    {
-        Patterns = Array.Empty<string>() == patterns ? (new[] { "*" }) : patterns;
-    }
+    /// <param name="patterns">"*" is used if this is empty.</param>
+    public FileSearch(params string[] patterns) =>
+        Patterns = Array.Empty<string>() == patterns ? (["*"]) : patterns;
+
+    /// <summary>
+    /// Constructor taking IEnumberable{string} of patterns to earch for.
+    /// </summary>
+    /// <param name="patterns"></param>
+    public FileSearch(IEnumerable<string> patterns) => Patterns = patterns;
 
     #endregion Constructos
 
@@ -40,7 +44,7 @@ public class FileSearch
 
         if (Array.Empty<string>() == dirs)
         {
-            dirs = new[] { Directory.GetCurrentDirectory() };
+            dirs = [Directory.GetCurrentDirectory()];
         }
 
         foreach (var dir in dirs)
@@ -60,8 +64,11 @@ public class FileSearch
     /// Get the files that match Pattern.
     /// </summary>
     /// <param name="dirs"></param>
+    /// <param name="searchOption"></param>
     /// <returns></returns>
-    public IEnumerable<string> GetFiles(IEnumerable<string> dirs)
+    public IEnumerable<string> GetFiles(
+        IEnumerable<string> dirs,
+        SearchOption searchOption = SearchOption.TopDirectoryOnly)
     {
         Verify.IsNotNull(dirs);
 
@@ -69,7 +76,7 @@ public class FileSearch
         {
             foreach (var pattern in Patterns)
             {
-                foreach (var fqpn in Directory.EnumerateFiles(dir, pattern, SearchOption.TopDirectoryOnly))
+                foreach (var fqpn in Directory.EnumerateFiles(dir, pattern, searchOption))
                 {
                     yield return fqpn;
                 }

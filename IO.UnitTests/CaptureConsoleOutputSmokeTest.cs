@@ -1,9 +1,8 @@
 // Copyright and trademark notices at the end of this file.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography.X509Certificates;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
@@ -11,6 +10,8 @@ namespace SharperHacks.CoreLibs.IO.UnitTests;
 [TestClass]
 public class CaptureConsoleOutputSmokeTest
 {
+    private const string _testConsoleOuputString = "This should show up on console output.";
+
     private readonly object _lock = new();
 
     private TextWriter _previousConsoleOut = Console.Out;
@@ -71,6 +72,7 @@ public class CaptureConsoleOutputSmokeTest
                 Assert.IsTrue(sw.ToString().Contains(done));
                 Console.SetOut(previousOut);
             }
+            Console.WriteLine(_testConsoleOuputString);
         }
     }
 
@@ -118,6 +120,8 @@ public class CaptureConsoleOutputSmokeTest
             }
         }
         Assert.IsTrue(_timeOutExceptionCaught);
+
+        Console.WriteLine(_testConsoleOuputString);
     }
 }
 

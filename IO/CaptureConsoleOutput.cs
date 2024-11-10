@@ -32,7 +32,7 @@ public class CaptureConsoleOutput : IDisposable
     /// <remarks>
     /// Thread and nested using() block safe.
     /// </remarks>
-    public CaptureConsoleOutput() 
+    public CaptureConsoleOutput()
     {
         Initialize(-1); // Infinite wait.
     }

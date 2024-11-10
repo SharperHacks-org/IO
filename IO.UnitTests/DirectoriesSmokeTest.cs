@@ -10,15 +10,15 @@ namespace SharperHacks.CoreLibs.IO.UnitTests;
 [TestClass]
 public class DirectoriesSmokeTest //: TestBase
 {
-    private readonly string[] _subDirs = new[]
-            {
+    private readonly string[] _subDirs =
+            [
                 @"A1",
                 @"A1\A2",
                 @"A1\A2\A3",
                 @"B",
                 @"C1",
                 @"C1\C2"
-            };
+            ];
 
     private HashSet<string> GetPathOracle(string root)
     {

@@ -20,7 +20,7 @@ public class TempDirectory : IDisposable
     /// </summary>
     [NotNull]
     public DirectoryInfo DirectoryInfo { get; }
-    
+
     #region IDisposable
 
     private bool _disposedValue; // To detect redundant calls
@@ -117,7 +117,7 @@ public class TempDirectory : IDisposable
     public DirectoryInfo CreateNamedSubdirectory(string name)
     {
         Verify.IsNotNull(name);
-        
+
         var result = DirectoryInfo.CreateSubdirectory(name);
 
         return result;

@@ -15,13 +15,13 @@ public class FileHelpersSmokeTests //: TestBase
     [TestMethod]
     public void SplitPattern()
     {
-        (string prefix, string specifier, string postfix)[] patternElements = new[]
-        {
+        (string prefix, string specifier, string postfix)[] patternElements =
+        [
             ("prefix1", "{n}", "postfix1"), (@"prefix2\blah", "{n}", "postfix2.blah"),
             (@"d:\prefix3\blah\blah", "{n}", "postfix2.blah.blah"),
             (@"d:\prefix3\blah\blah", "{n}", "postfix2.blah.blah"),
             (string.Empty, "{yak yak}", string.Empty)
-        };
+        ];
 
         foreach (var (prefix, specifier, postfix) in patternElements)
         {

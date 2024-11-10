@@ -11,15 +11,17 @@ namespace SharperHacks.CoreLibs.IO.UnitTests;
 public class FileSearchSmokeTests //: TestBase
 {
     // TODO: Boiler plate here and DirectoriesSmokeTest is good candidate for a new class.
-    private readonly string[] _subDirs = new[]
-    {
+    private readonly string[] _subDirs =
+    [
         @"A1",
         @"A1\A2",
         @"A1\A2\A3",
         @"B",
         @"C1",
         @"C1\C2",
-    };
+    ];
+
+    private const int _numFiles = 4;
 
     private TempDirectory GetPopulatedTempDir(string prefix, out List<string> dirList)
     {
@@ -32,11 +34,10 @@ public class FileSearchSmokeTests //: TestBase
             _ = Directory.CreateDirectory(fqpn);
             dirList.Add(fqpn);
         }
-        Assert.IsTrue(dirList.Count != 0);
+        Assert.AreEqual(_subDirs.Length, dirList.Count);
 
         return tmpDir;
     }
-
 
     private static HashSet<string> AddFiles(DirectoryInfo dirInfo)
     {
@@ -46,7 +47,7 @@ public class FileSearchSmokeTests //: TestBase
         {
             if (dir.EndsWith("A1") || dir.EndsWith("A3") || dir.EndsWith("C2"))
             {
-                for (var i = 0; i < 4; i++)
+                for (var i = 0; i < _numFiles; i++)
                 {
                     var fqpn = Path.Join(dir, Guid.NewGuid().ToString("D"));
                     File.Create(fqpn).Close();
@@ -54,7 +55,7 @@ public class FileSearchSmokeTests //: TestBase
                 }
             }
         }
-        Assert.IsTrue(filesOracle.Count != 0);
+        Assert.AreEqual(4, filesOracle.Count);
 
         return filesOracle;
     }
@@ -66,22 +67,19 @@ public class FileSearchSmokeTests //: TestBase
 
         using var tmpDir = GetPopulatedTempDir(nameof(DefaultConstructor), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.IsTrue(dirs.Count > 0);
+        Assert.AreEqual(_subDirs.Length, dirs.Count);
 
-        var fileList = new List<string>();
-        foreach (var file in Directory.GetFiles(Directory.GetCurrentDirectory()))
-        {
-            fileList.Add(file);
-        }
+        var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
         var count = 0;
-        foreach(var fqpn in fs.GetFiles())
+        foreach (var fqpn in fs.GetFiles(dirs.ToArray()))
         {
-            Assert.IsTrue(fileList.Contains(fqpn));
+            Assert.IsTrue(filesOracle.Contains(fqpn));
             count++;
         }
-        Assert.IsTrue(count != 0);
-        Assert.AreEqual(fileList.Count, count);
+
+        Assert.AreEqual(_numFiles, count);
+        Assert.AreEqual(filesOracle.Count, count);
     }
 
     [TestMethod]
@@ -89,9 +87,9 @@ public class FileSearchSmokeTests //: TestBase
     {
         var fs = new FileSearch("*");
 
-        using var tmpDir = GetPopulatedTempDir(nameof(DefaultConstructor), out var dirs);
+        using var tmpDir = GetPopulatedTempDir(nameof(ParamsConstructor), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.IsTrue(dirs.Count > 0);
+        Assert.AreEqual(_subDirs.Length, dirs.Count);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
@@ -102,7 +100,30 @@ public class FileSearchSmokeTests //: TestBase
             count++;
         }
 
-        Assert.IsTrue(count != 0);
+        Assert.AreEqual(_numFiles, count);
+        Assert.AreEqual(filesOracle.Count, count);
+    }
+
+    [TestMethod]
+    public void IEnumerableConstructor()
+    {
+        var searchOptions = new string[] { "*.dll", "*.exe" };
+        var fs = new FileSearch("*");
+
+        using var tmpDir = GetPopulatedTempDir(nameof(IEnumerableConstructor), out var dirs);
+        Assert.IsNotNull(dirs);
+        Assert.AreEqual(_subDirs.Length, dirs.Count);
+
+        var filesOracle = AddFiles(tmpDir.DirectoryInfo);
+
+        var count = 0;
+        foreach (var fqpn in fs.GetFiles(dirs.ToArray()))
+        {
+            Assert.IsTrue(filesOracle.Contains(fqpn));
+            count++;
+        }
+
+        Assert.AreEqual(_numFiles, count);
         Assert.AreEqual(filesOracle.Count, count);
     }
 
@@ -111,9 +132,9 @@ public class FileSearchSmokeTests //: TestBase
     {
         var fs = new FileSearch("*");
 
-        using var tmpDir = GetPopulatedTempDir(nameof(DefaultConstructor), out var dirs);
+        using var tmpDir = GetPopulatedTempDir(nameof(GetFilesIEnumerable), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.IsTrue(dirs.Count > 0);
+        Assert.AreEqual(_subDirs.Length, dirs.Count);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
@@ -124,7 +145,7 @@ public class FileSearchSmokeTests //: TestBase
             count++;
         }
 
-        Assert.IsTrue(count != 0);
+        Assert.AreEqual(_numFiles, count);
         Assert.AreEqual(filesOracle.Count, count);
     }
 }

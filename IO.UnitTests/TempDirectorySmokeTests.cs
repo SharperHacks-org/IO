@@ -12,15 +12,15 @@ namespace SharperHacks.CoreLibs.IO.UnitTests;
 [TestClass]
 public class TempDirectorySmokeTests //: TestBase
 {
-    private readonly string[] _subDirs = new[]
-    {
+    private readonly string[] _subDirs =
+    [
         @"A1",
         @"A1\A2",
         @"A1\A2\A3",
         @"B",
         @"C1",
         @"C1\C2"
-    };
+    ];
 
     [TestMethod]
     public void Constructor_Default()

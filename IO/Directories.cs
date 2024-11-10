@@ -58,7 +58,7 @@ public class Directories
     public Directories(SearchOption option, IEnumerable<string> roots)
     {
         var enumerable = roots as string[] ?? roots.ToArray();
-        Roots = enumerable.Length > 0 ? enumerable : new[] { "." };
+        Roots = enumerable.Length > 0 ? enumerable : ["."];
         SearchOption = option;
     }
 
@@ -69,7 +69,7 @@ public class Directories
     /// <param name="roots"></param>
     public Directories(SearchOption option, params string[] roots)
     {
-        Roots = roots.Length > 0 ? roots : new [] {"."};
+        Roots = roots.Length > 0 ? roots : ["."];
         SearchOption = option;
     }
 

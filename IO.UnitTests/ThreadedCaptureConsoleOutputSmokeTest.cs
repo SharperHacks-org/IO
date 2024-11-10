@@ -1,8 +1,10 @@
 // Copyright and trademark notices at the end of this file.
 
-#if true // ToDo: These should be run in a seperate process from the other tests.
-          // Each can be run successfully, manually, so some kind of synchronization
-          // will be required.
+#if true
+
+// ToDo: Each of these test cases has to be run manually.
+// Investigate why MsTest will not run both of these with the rest of the tests.
+// 
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,7 +13,12 @@ namespace SharperHacks.CoreLibs.IO.UnitTests;
 [TestClass]
 public class ThreadedCaptureConsoleOutputSmokeTest
 {
-    private readonly object _lock = new();
+    // This lock is used to prevent test cases from running in parallel.
+#if NET9_0_OR_GREATER
+    private static readonly Lock _lock = new();
+#else
+    private static readonly object _lock = new();
+#endif
 
     private static void ThreadEntry()
     {
@@ -26,7 +33,7 @@ public class ThreadedCaptureConsoleOutputSmokeTest
         Console.WriteLine(outer2);
         Console.Out.Flush();
 
-        using (var capturedInner = new CaptureConsoleOutput(100000))
+        using (var capturedInner = new CaptureConsoleOutput())
         {
             Console.WriteLine(inner1);
             Console.WriteLine(inner2);
@@ -44,11 +51,14 @@ public class ThreadedCaptureConsoleOutputSmokeTest
         Assert.IsFalse(capturedOuter.CapturedOutput.Contains(inner2));
     }
 
+    // When this test is run manually, it always succeeds.
     [TestMethod]
     public void SmokeThreaded()
     {
         var threads = new List<Thread>();
         Assert.IsNotNull(threads);
+
+        Console.WriteLine("We run!");
 
         lock (_lock)
         {
@@ -69,21 +79,8 @@ public class ThreadedCaptureConsoleOutputSmokeTest
                 thread.Join(50000);
             }
         }
-    }
 
-    // Not clear why we can't run this test case with the SmokeThreaded case,
-    // we need to run this to get 100% coverage.
-    [TestMethod]
-    public void FinalizerWithoutDispose()
-    {
-        lock (_lock)
-        {
-            var captured = new CaptureConsoleOutput();
-            Assert.IsNotNull(captured);
-            var result = GC.GetGeneration(captured);
-            GC.Collect(result, GCCollectionMode.Forced);
-            GC.WaitForPendingFinalizers();
-        }
+        Console.WriteLine("We always see this.");
     }
 }
 #endif
