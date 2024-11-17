@@ -76,9 +76,6 @@ public class CaptureConsoleOutputSmokeTest
         }
     }
 
-#if false // TODO: Try moving this to a separate test class and running it there.
-#endif
-
     private static bool _timeOutExceptionCaught;
 
     private static void ThisThreadWillCatchTimeoutException()
