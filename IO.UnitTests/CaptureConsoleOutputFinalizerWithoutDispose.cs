@@ -2,10 +2,13 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
-// This test always causes the ThreadedCaptureOutputSmokeTest to fail with timeout exceptions.
+// This test always causes the ThreadedCaptureOutputSmokeTest to fail.
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 [Ignore]
 public class CaptureConsoleOutputFinalizerWithoutDispose

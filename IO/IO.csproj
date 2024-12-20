@@ -59,7 +59,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="4.0.1" />
+    <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="4.0.2" />
   </ItemGroup>
   
   <ItemGroup>

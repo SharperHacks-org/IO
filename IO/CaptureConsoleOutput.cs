@@ -32,10 +32,7 @@ public class CaptureConsoleOutput : IDisposable
     /// <remarks>
     /// Thread and nested using() block safe.
     /// </remarks>
-    public CaptureConsoleOutput()
-    {
-        Initialize(-1); // Infinite wait.
-    }
+    public CaptureConsoleOutput() => Initialize(-1); // Infinite wait.
 
     /// <summary>
     /// Constructor with timeout on internally shared, mutex synchronized resource wait.
@@ -45,10 +42,7 @@ public class CaptureConsoleOutput : IDisposable
     /// Throws TimeoutException if time to wait expires.
     /// </remarks>
     /// <param name="millisecondsToWait"></param>
-    public CaptureConsoleOutput(int millisecondsToWait)
-    {
-        Initialize(millisecondsToWait);
-    }
+    public CaptureConsoleOutput(int millisecondsToWait) => Initialize(millisecondsToWait);
 
     #endregion Constructors
 
@@ -57,10 +51,14 @@ public class CaptureConsoleOutput : IDisposable
 
     #region Private
 
-    [NotNull] private static readonly object _staticLock = new();
-    private bool _initialized;
+    // Protects internal state.
+#if NET9_0_OR_GREATER
+    private static readonly Lock _lock = new();
+#else
+    private static readonly object _lock = new();
+#endif
 
-    [NotNull] private static readonly Mutex _mutex = new();
+    private static readonly Mutex _mutex = new();
 
     // The thread that currently owns console output redirection.
     private static int _currentThreadId;
@@ -76,13 +74,8 @@ public class CaptureConsoleOutput : IDisposable
 
         var myThreadId = Environment.CurrentManagedThreadId;
 
-        lock (_staticLock)
+        lock (_lock)
         {
-            if (!_initialized)
-            {
-                _initialized = true;
-            }
-
             if (_currentThreadId == myThreadId)
             {
                 // We're already holding the mutex.
@@ -97,7 +90,7 @@ public class CaptureConsoleOutput : IDisposable
             throw new TimeoutException("Timed-out waiting on mutex.");
         }
 
-        lock (_staticLock)
+        lock (_lock)
         {
             _currentThreadId = myThreadId;
         }
@@ -109,7 +102,7 @@ public class CaptureConsoleOutput : IDisposable
     {
         // Redirect console output so we can capture it.
         _stringWriter = new StringWriter();
-        lock (_staticLock)
+        lock (_lock)
         {
             _previousConsoleOut = Console.Out;
             Console.SetOut(_stringWriter);
@@ -135,7 +128,7 @@ public class CaptureConsoleOutput : IDisposable
             if (disposing)
             {
                 // Restore console output.
-                lock (_staticLock)
+                lock (_lock)
                 {
                     if (null != _previousConsoleOut)
                     {

@@ -71,10 +71,7 @@ public class TempDirectory : IDisposable
     /// Default constructor creates a new GUID string that is used to create
     /// a directory in the Path.GetTempPath() directory.
     /// </summary>
-    public TempDirectory(params string[] subDirs)
-    {
-        DirectoryInfo = CreateDirectory("", subDirs);
-    }
+    public TempDirectory(params string[] subDirs) => DirectoryInfo = CreateDirectory("", subDirs);
 
     /// <summary>
     /// Constructor uses the prefix and a new GUID string to create a directory
