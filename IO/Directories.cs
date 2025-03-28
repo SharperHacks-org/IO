@@ -1,5 +1,7 @@
 // Copyright and trademark notices at the end of this file.
 
+// ToDo:
+#if false 
 namespace SharperHacks.CoreLibs.IO;
 
 // TODO: Figure out how to improve, optimize and asynchronize this, when .NET has proper glob star support.
@@ -18,6 +20,11 @@ public class Directories
     public IEnumerable<string> Roots { get; }
 
     /// <summary>
+    /// An enumeration of the configured exclusions.
+    /// </summary>
+    public IEnumerable<string>? Exclusions { get; set; }
+
+    /// <summary>
     /// Whether to recurse just the configured roots, or also their subdirectories.
     /// </summary>
     public SearchOption SearchOption { get; }
@@ -33,7 +40,18 @@ public class Directories
         {
             foreach (var dir in GetDirectories(targetDir, pattern))
             {
-                yield return dir;
+                switch (Exclusions)
+                {
+                    case not null:
+                        if (!Exclusions.Contains(dir))
+                        {
+                            yield return dir;
+                        }
+                        break;
+                    default:
+                        yield return dir;
+                        break;
+                }
             }
         }
     }
@@ -55,10 +73,18 @@ public class Directories
     /// </summary>
     /// <param name="option"></param>
     /// <param name="roots"></param>
-    public Directories(SearchOption option, IEnumerable<string> roots)
+    /// <param name="exclusions"></param>
+    public Directories(
+        SearchOption option, 
+        IEnumerable<string> roots,
+        IEnumerable<string>? exclusions = null)
     {
         var enumerable = roots as string[] ?? roots.ToArray();
+
         Roots = enumerable.Length > 0 ? enumerable : ["."];
+
+        Exclusions = exclusions; //BuildExclusionList(exclusions);
+
         SearchOption = option;
     }
 
@@ -67,7 +93,9 @@ public class Directories
     /// </summary>
     /// <param name="option"></param>
     /// <param name="roots"></param>
-    public Directories(SearchOption option, params string[] roots)
+    public Directories(
+        SearchOption option,
+        params string[] roots)
     {
         Roots = roots.Length > 0 ? roots : ["."];
         SearchOption = option;
@@ -75,10 +103,55 @@ public class Directories
 
     #endregion Constructors
 
-    #endregion Public
+#endregion Public
 
-    #region Private
+#region Private
+#if false
+    private HashSet<string> BuildExclusionList(IEnumerable<string>? exclusions)
+    {
+        var paths = new HashSet<string>();
 
+        if (exclusions is null) return paths;
+
+        foreach (var root in Roots)
+        {
+            foreach(var pattern in exclusions)
+            {
+                string? exclusion;
+                if (Path.IsPathFullyQualified(pattern))
+                {
+                    exclusion = pattern.EndsWith('*') 
+                        ? root
+                        : pattern;
+                }
+                else
+                {
+                    exclusion = pattern.StartsWith("**\\", StringComparison.Ordinal)
+                                ? Path.Join(root, pattern[3..])
+                                : Path.Join(root, pattern);
+                }
+
+                if (exclusion.Contains('*') || exclusion.Contains('!'))
+                {
+                    try
+                    {
+                        foreach (var dir in Directory.GetDirectories(root, exclusion))
+                        {
+                            paths.Add(dir);
+                        }
+                    }
+                    catch (DirectoryNotFoundException) { }
+                }
+                else
+                {
+                    paths.Add(exclusion);
+                }
+            }
+        }
+
+        return paths;
+    }
+#endif
     private IEnumerable<string> GetDirectories(string root, string pattern)
     {
         if (SearchOption == SearchOption.AllDirectories)
@@ -94,9 +167,9 @@ public class Directories
         }
     }
 
-    #endregion Private
+#endregion Private
 }
-
+#endif
 // Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");

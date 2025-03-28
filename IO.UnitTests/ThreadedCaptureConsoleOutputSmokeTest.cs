@@ -8,8 +8,11 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
+[ExcludeFromCodeCoverage]
 [TestClass]
 public class ThreadedCaptureConsoleOutputSmokeTest
 {
@@ -22,12 +25,12 @@ public class ThreadedCaptureConsoleOutputSmokeTest
 
     private static void ThreadEntry()
     {
-        var outer1 = "Outer1.";
+        var outer1 = Environment.CurrentManagedThreadId.ToString();//"Outer1.";
         var outer2 = "Outer2.";
         var inner1 = "Inner1.";
         var inner2 = "Inner2.";
 
-        using var capturedOuter = new CaptureConsoleOutput(100);
+        using var capturedOuter = new CaptureConsoleOutput(1000);
 
         Console.WriteLine(outer1);
         Console.WriteLine(outer2);
@@ -59,6 +62,7 @@ public class ThreadedCaptureConsoleOutputSmokeTest
         Assert.IsNotNull(threads);
 
         Console.WriteLine("We run!");
+        Console.WriteLine(DateTime.Now.ToString());
 
         lock (_lock)
         {

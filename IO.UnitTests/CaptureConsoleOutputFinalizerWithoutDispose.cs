@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
-// This test always causes the ThreadedCaptureOutputSmokeTest to fail.
+// This test interferes with ThreadedCaptureConsoleOuputSmokeTest.
 
 [ExcludeFromCodeCoverage]
 [TestClass]

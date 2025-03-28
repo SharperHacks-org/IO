@@ -7,7 +7,7 @@ using System.Globalization;
 namespace SharperHacks.CoreLibs.IO;
 
 /// <summary>
-/// Miscellaneous file related helper functions used by some SharperHacks.IO classes.
+/// Miscellaneous file related helper functions used by some SharperHacks.CoreLibs.IO classes.
 /// </summary>
 public static class FileHelpers
 {

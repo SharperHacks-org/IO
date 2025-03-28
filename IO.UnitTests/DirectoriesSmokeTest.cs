@@ -1,5 +1,5 @@
 // Copyright and trademark notices at the end of this file.
-
+#if false
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Diagnostics.CodeAnalysis;
@@ -19,6 +19,11 @@ public class DirectoriesSmokeTest //: TestBase
                 @"C1",
                 @"C1\C2"
             ];
+
+    private readonly string[] _exclude =
+        [
+            @"**\C2",
+        ];
 
     private HashSet<string> GetPathOracle(string root)
     {
@@ -74,7 +79,9 @@ public class DirectoriesSmokeTest //: TestBase
         using var tmpDir = GetPopulatedTempDir(nameof(ParamsRootConstructor));
         var oracle = GetPathOracle(tmpDir.DirectoryInfo.FullName);
 
-        dirs = new Directories(SearchOption.AllDirectories, tmpDir.DirectoryInfo.FullName);
+        dirs = new Directories(
+            SearchOption.AllDirectories, 
+            tmpDir.DirectoryInfo.FullName);
 
         var count = 0;
         foreach (var dir in dirs.GetDirectories())
@@ -91,18 +98,77 @@ public class DirectoriesSmokeTest //: TestBase
         using var tmpDir = GetPopulatedTempDir(nameof(ParamsRootConstructor));
         var oracle = GetPathOracle(tmpDir.DirectoryInfo.FullName);
 
-        var dirs = new Directories(SearchOption.TopDirectoryOnly, oracle);
-        
+        Console.WriteLine("Oracle:");
+        oracle.WriteAllLines();
+
+        var dirs = new Directories(
+            SearchOption.TopDirectoryOnly, 
+            oracle,
+            _exclude);
+
+        Console.WriteLine("Exclude:");
+        _exclude.WriteAllLines();
+
         var count = 0;
-        foreach (var dir in dirs.GetDirectories())
+        var found = dirs.GetDirectories();
+
+        Console.WriteLine("Found:");
+        found.WriteAllLines();
+
+        foreach (var dir in found)
         {
             Assert.IsTrue(oracle.Contains(dir));
             count++;
         }
-        Assert.AreEqual(6, count);
+        Assert.AreEqual(_subDirs.Length - _exclude.Length, count);
+    }
+
+    [TestMethod]
+    public void ExcludeRoot()
+    {
+        using var tmpDir = GetPopulatedTempDir(nameof(ExcludeRoot));
+        var oracle = GetPathOracle(tmpDir.DirectoryInfo.FullName);
+
+        var dirs = new Directories(
+            SearchOption.AllDirectories,
+            oracle,
+            [
+                Path.Join(tmpDir.DirectoryInfo.FullName, "*"),
+            ]);
+
+        Assert.IsFalse(dirs.GetDirectories().Any());
+    }
+
+    [TestMethod]
+    public void ExcludeOneSubDirAndNotItsChildren()
+    {
+        using var tmpDir = GetPopulatedTempDir(nameof(ExcludeRoot));
+        var oracle = GetPathOracle(tmpDir.DirectoryInfo.FullName);
+
+        var dirs = new Directories(
+            SearchOption.AllDirectories,
+            oracle,
+            [
+                _subDirs[0],
+            ]);
+
+        oracle.WriteAllLines();
+
+        Console.WriteLine("\nExclusions:");
+        dirs.Exclusions!.WriteAllLines();
+        Console.WriteLine();
+
+        var found = dirs.GetDirectories();
+
+        Console.WriteLine("Found:");
+        found.WriteAllLines();
+
+        Assert.AreEqual(oracle.Count - 1, found.Count());
+        Assert.IsFalse(found.Contains(_subDirs[0]));
+        Assert.IsTrue(found.Contains(_subDirs[1]));
     }
 }
-
+#endif
 // Copyright Joseph W Donahue and Sharper Hacks LLC (US-WA)
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
