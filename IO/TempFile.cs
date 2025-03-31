@@ -19,13 +19,18 @@ public class TempFile : IDisposable
     /// The FileInfo object obtained on successful file creation.
     /// </summary>
     [NotNull]
-    public FileInfo FileInfo { get; }
+    public FileInfo FileInfo { get; private set; }
 
     /// <summary>
     /// The FileStream resulting from a successful file creation.
     /// </summary>
     [NotNull]
-    public FileStream FileStream { get; }
+    public FileStream FileStream { get; private set; }
+
+    /// <summary>
+    /// Set true to diagnose leaked temporary files.
+    /// </summary>
+    public bool PropogateExceptionsOutOfDispose { get; set; }
 
     #region IDisposable Support
     private bool _disposedValue; // To detect redundant calls
@@ -38,13 +43,30 @@ public class TempFile : IDisposable
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposedValue)
+        try
         {
-            _disposedValue = true;
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    FileStream.Close();
+                    FileStream.Dispose();
 
-            FileStream.Close();
-            FileStream.Dispose();
-            File.Delete(FileInfo.FullName);
+                    FileStream = null!;
+                }
+
+                File.Delete(FileInfo.FullName);
+                FileInfo = null!;
+
+                _disposedValue = true;
+            }
+        }
+        catch(IOException) 
+        { 
+            if (PropogateExceptionsOutOfDispose)
+            {
+                throw;
+            }
         }
     }
 

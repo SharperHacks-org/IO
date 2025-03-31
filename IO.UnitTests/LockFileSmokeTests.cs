@@ -69,7 +69,8 @@ public class LockFileSmokeTests
                     tempDir.DirectoryInfo,
                     FileMode.CreateNew,
                     FileAccess.Write,
-                    FileShare.Read);
+                    FileShare.Read)
+            { PropogateExceptionsOutOfDispose = true };
 
             _lockFileName = tempFile.FileInfo.FullName;
 
