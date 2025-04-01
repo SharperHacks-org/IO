@@ -33,6 +33,7 @@ public class TempFile : IDisposable
     public bool PropogateExceptionsOutOfDispose { get; set; }
 
     #region IDisposable Support
+
     private bool _disposedValue; // To detect redundant calls
 
     /// <summary>
@@ -62,7 +63,10 @@ public class TempFile : IDisposable
             }
         }
         catch(IOException) 
-        { 
+        {
+            // It's possible we're disposing of this temporary object in the unwind
+            // path of an earlier exception. This is the most likely explanation for
+            // our inability to delete the temp file.
             if (PropogateExceptionsOutOfDispose)
             {
                 throw;

@@ -21,6 +21,11 @@ public class TempDirectory : IDisposable
     [NotNull]
     public DirectoryInfo DirectoryInfo { get; }
 
+    /// <summary>
+    /// Set true to diagnose leaked temporary files.
+    /// </summary>
+    public bool PropogateExceptionsOutOfDispose { get; set; }
+
     #region IDisposable
 
     private bool _disposedValue; // To detect redundant calls
@@ -37,10 +42,23 @@ public class TempDirectory : IDisposable
         {
             _disposedValue = true;
 
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            if (disposing && null != DirectoryInfo && Directory.Exists(DirectoryInfo.FullName))
+            try
             {
-                Directory.Delete(DirectoryInfo.FullName, true);
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (disposing && null != DirectoryInfo && Directory.Exists(DirectoryInfo.FullName))
+                {
+                    Directory.Delete(DirectoryInfo.FullName, true);
+                }
+            }
+            catch (IOException)
+            {
+                if (PropogateExceptionsOutOfDispose)
+                {
+                    // It's possible we're disposing of this temporary object in the unwind
+                    // path of an earlier exception. This is the most likely explanation for
+                    // our inability to delete the temp foler. A file is likely open therein.
+                    throw;
+                }
             }
         }
     }
