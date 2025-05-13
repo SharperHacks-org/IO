@@ -17,12 +17,34 @@ public class CaptureConsoleOutput : IDisposable
     /// The captured output.
     /// </summary>
     [NotNull]
-    public string CapturedOutput => _stringWriter?.ToString() ?? string.Empty;
+    [Obsolete("Replaced by StdOut.")]
+    public string CapturedOutput => _swStdOut?.ToString() ?? string.Empty;
+
+    /// <summary>
+    /// The captured output from stdout.
+    /// </summary>
+    public string StdOut => _swStdOut?.ToString() ?? string.Empty;
+
+    /// <summary>
+    /// The caputred output from stderr.
+    /// </summary>
+    public string StdErr => _swStdErr?.ToString() ?? string.Empty;
 
     /// <summary>
     /// Get the previous stream writer.
     /// </summary>
+    [Obsolete("Replaced by PreviousStdOut.")]
     public TextWriter PreviousWriter => _previousConsoleOut;
+
+    /// <summary>
+    /// Get previous stream writer for standard out.
+    /// </summary>
+    public TextWriter PreviousStdOut => _previousConsoleOut;
+
+    /// <summary>
+    /// Get previous stream writer for standard error.
+    /// </summary>
+    public TextWriter PreviousStdErr => _previousConsoleErr;
 
     #region Constructors
 
@@ -65,13 +87,16 @@ public class CaptureConsoleOutput : IDisposable
 
     private static ulong _nestedCounter;
 
-    private StringWriter? _stringWriter;
+    private StringWriter? _swStdOut;
+    private StringWriter? _swStdErr;
+
     private TextWriter _previousConsoleOut;
+    private TextWriter _previousConsoleErr;
 
     [MemberNotNull(nameof(_previousConsoleOut))]
+    [MemberNotNull(nameof(_previousConsoleErr))]
     private void Initialize(int millisecondsToWait)
     {
-
         var myThreadId = Environment.CurrentManagedThreadId;
 
         lock (_lock)
@@ -98,14 +123,19 @@ public class CaptureConsoleOutput : IDisposable
     }
 
     [MemberNotNull(nameof(_previousConsoleOut))]
+    [MemberNotNull(nameof(_previousConsoleErr))]
     private void Redirect()
     {
         // Redirect console output so we can capture it.
-        _stringWriter = new StringWriter();
+        _swStdOut = new StringWriter();
+        _swStdErr = new StringWriter();
+
         lock (_lock)
         {
             _previousConsoleOut = Console.Out;
-            Console.SetOut(_stringWriter);
+            _previousConsoleErr = Console.Error;
+            Console.SetOut(_swStdOut);
+            Console.SetError(_swStdErr);
         }
     }
 
@@ -133,6 +163,11 @@ public class CaptureConsoleOutput : IDisposable
                     if (null != _previousConsoleOut)
                     {
                         Console.SetOut(_previousConsoleOut);
+                    }
+
+                    if (null != _previousConsoleErr)
+                    {
+                        Console.SetError(_previousConsoleErr);
                     }
 
                     _currentThreadId = 0;

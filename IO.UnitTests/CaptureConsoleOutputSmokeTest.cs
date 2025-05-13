@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Diagnostics.CodeAnalysis;
 
+using SharperHacks.CoreLibs.Reflection;
+
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
 [ExcludeFromCodeCoverage]
@@ -27,9 +29,13 @@ public class CaptureConsoleOutputSmokeTest
     {
         lock (_lock)
         {
-            var sw = new StringWriter();
+            var swOut = new StringWriter();
+            var swErr = new StringWriter();
             var previousOut = Console.Out;
-            Console.SetOut(sw);
+            var previousError = Console.Error;
+
+            Console.SetOut(swOut);
+            Console.SetError(swErr);
 
             try
             {
@@ -41,24 +47,24 @@ public class CaptureConsoleOutputSmokeTest
                 {
                     Console.WriteLine(line1);
                     Console.WriteLine(line2);
-                    Assert.IsTrue(captured.CapturedOutput.Contains(line1));
-                    Assert.IsTrue(captured.CapturedOutput.Contains(line2));
+                    Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
+                    Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
 
-                    captured.PreviousWriter.WriteLine(previousString);
-                    Assert.IsTrue(sw.ToString().Contains(previousString));
+                    captured.PreviousStdOut.WriteLine(previousString);
+                    Assert.IsTrue(swOut.ToString().Contains(previousString), Code.AtLineNumber());
                 }
 
                 const string inbetweenString = "Inbetween redirects";
 
                 Console.WriteLine(inbetweenString);
-                Assert.IsTrue(sw.ToString().Contains(inbetweenString));
+                Assert.IsTrue(swOut.ToString().Contains(inbetweenString));
 
                 using (var captured = new CaptureConsoleOutput(3000))
                 {
                     Console.WriteLine(line1);
                     Console.WriteLine(line2);
-                    Assert.IsTrue(captured.CapturedOutput.Contains(line1));
-                    Assert.IsTrue(captured.CapturedOutput.Contains(line2));
+                    Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
+                    Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
                 }
             }
             catch (Exception ex)
@@ -69,8 +75,9 @@ public class CaptureConsoleOutputSmokeTest
             {
                 var done = "Done?";
                 Console.WriteLine(done);
-                Assert.IsTrue(sw.ToString().Contains(done));
+                Assert.IsTrue(swOut.ToString().Contains(done), Code.AtLineNumber());
                 Console.SetOut(previousOut);
+                Console.SetError(previousError);
             }
             Console.WriteLine(_testConsoleOuputString);
         }
@@ -105,8 +112,8 @@ public class CaptureConsoleOutputSmokeTest
 
             Console.WriteLine(line1);
             Console.WriteLine(line2);
-            Assert.IsTrue(captured.CapturedOutput.Contains(line1));
-            Assert.IsTrue(captured.CapturedOutput.Contains(line2));
+            Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
+            Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
 
             var thread = new Thread(ThisThreadWillCatchTimeoutException);
             thread.Start();
@@ -116,7 +123,7 @@ public class CaptureConsoleOutputSmokeTest
                 Thread.Sleep(50);
             }
         }
-        Assert.IsTrue(_timeOutExceptionCaught);
+        Assert.IsTrue(_timeOutExceptionCaught, Code.AtLineNumber());
 
         Console.WriteLine(_testConsoleOuputString);
     }
