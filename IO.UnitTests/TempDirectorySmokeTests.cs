@@ -109,12 +109,10 @@ public class TempDirectorySmokeTests //: TestBase
     }
 
     [TestMethod]
-    [ExpectedException(typeof(VerifyException))]
     public void Constructor_RelativePathPrefixRejected()
     {
         var prefix = @"..\deleteMe";
-        // ReSharper disable UnusedVariable
-        using var tmpDir = new TempDirectory(prefix);
+        Assert.ThrowsExactly<VerifyException>(() => new TempDirectory(prefix));
     }
 
     [TestMethod]
