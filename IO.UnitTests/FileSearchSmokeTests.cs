@@ -34,7 +34,7 @@ public class FileSearchSmokeTests //: TestBase
             _ = Directory.CreateDirectory(fqpn);
             dirList.Add(fqpn);
         }
-        Assert.AreEqual(_subDirs.Length, dirList.Count);
+        Assert.HasCount(_subDirs.Length, dirList);
 
         return tmpDir;
     }
@@ -55,7 +55,7 @@ public class FileSearchSmokeTests //: TestBase
                 }
             }
         }
-        Assert.AreEqual(4, filesOracle.Count);
+        Assert.HasCount(4, filesOracle);
 
         return filesOracle;
     }
@@ -67,14 +67,14 @@ public class FileSearchSmokeTests //: TestBase
 
         using var tmpDir = GetPopulatedTempDir(nameof(DefaultConstructor), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.AreEqual(_subDirs.Length, dirs.Count);
+        Assert.HasCount(_subDirs.Length, dirs);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
         var count = 0;
         foreach (var fqpn in fs.GetFiles(dirs.ToArray()))
         {
-            Assert.IsTrue(filesOracle.Contains(fqpn));
+            Assert.Contains(fqpn, filesOracle);
             count++;
         }
 
@@ -89,14 +89,14 @@ public class FileSearchSmokeTests //: TestBase
 
         using var tmpDir = GetPopulatedTempDir(nameof(ParamsConstructor), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.AreEqual(_subDirs.Length, dirs.Count);
+        Assert.HasCount(_subDirs.Length, dirs);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
         var count = 0;
         foreach(var fqpn in fs.GetFiles(dirs.ToArray()))
         {
-            Assert.IsTrue(filesOracle.Contains(fqpn));
+            Assert.Contains(fqpn, filesOracle);
             count++;
         }
 
@@ -112,14 +112,14 @@ public class FileSearchSmokeTests //: TestBase
 
         using var tmpDir = GetPopulatedTempDir(nameof(IEnumerableConstructor), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.AreEqual(_subDirs.Length, dirs.Count);
+        Assert.HasCount(_subDirs.Length, dirs);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
         var count = 0;
         foreach (var fqpn in fs.GetFiles(dirs.ToArray()))
         {
-            Assert.IsTrue(filesOracle.Contains(fqpn));
+            Assert.Contains(fqpn, filesOracle);
             count++;
         }
 
@@ -134,14 +134,14 @@ public class FileSearchSmokeTests //: TestBase
 
         using var tmpDir = GetPopulatedTempDir(nameof(GetFilesIEnumerable), out var dirs);
         Assert.IsNotNull(dirs);
-        Assert.AreEqual(_subDirs.Length, dirs.Count);
+        Assert.HasCount(_subDirs.Length, dirs);
 
         var filesOracle = AddFiles(tmpDir.DirectoryInfo);
 
         var count = 0;
         foreach (var fqpn in fs.GetFiles(dirs))
         {
-            Assert.IsTrue(filesOracle.Contains(fqpn));
+            Assert.Contains(fqpn, filesOracle);
             count++;
         }
 

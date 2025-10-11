@@ -31,9 +31,9 @@ public class InteractiveSmokeTests //: TestBase
 
         Console.SetIn(previousStringReader);
 
-        Assert.IsTrue(inputString.Contains(responseString));
-        Assert.IsFalse(inputString.Contains(promptString));
-        Assert.IsTrue(spew.StdOut.Contains(promptString));
+        Assert.Contains(responseString, inputString);
+        Assert.DoesNotContain(promptString, inputString);
+        Assert.Contains(promptString, spew.StdOut);
     }
 
     [TestMethod]
@@ -59,7 +59,7 @@ public class InteractiveSmokeTests //: TestBase
             using var spew = new CaptureConsoleOutput();
             conio.OutWriter = Console.Out;
             Assert.IsFalse(GetYesNoResult("blah\nblah\nno\n", conio));
-            Assert.IsTrue(spew.StdOut.Contains(conio.InvalidResponse));
+            Assert.Contains(conio.InvalidResponse, spew.StdOut);
         }
         finally
         {

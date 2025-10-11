@@ -42,16 +42,16 @@ public class ThreadedCaptureConsoleOutputSmokeTest
             Console.WriteLine(inner2);
             Console.Out.Flush();
 
-            Assert.IsTrue(capturedInner.StdOut.Contains(inner1));
-            Assert.IsTrue(capturedInner.StdOut.Contains(inner2));
-            Assert.IsFalse(capturedInner.StdOut.Contains(outer1));
-            Assert.IsFalse(capturedInner.StdOut.Contains(outer2));
+            Assert.Contains(inner1, capturedInner.StdOut);
+            Assert.Contains(inner2, capturedInner.StdOut);
+            Assert.DoesNotContain(outer1, capturedInner.StdOut);
+            Assert.DoesNotContain(outer2, capturedInner.StdOut);
         }
 
-        Assert.IsTrue(capturedOuter.StdOut.Contains(outer1));
-        Assert.IsTrue(capturedOuter.StdOut.Contains(outer2));
-        Assert.IsFalse(capturedOuter.StdOut.Contains(inner1));
-        Assert.IsFalse(capturedOuter.StdOut.Contains(inner2));
+        Assert.Contains(outer1, capturedOuter.StdOut);
+        Assert.Contains(outer2, capturedOuter.StdOut);
+        Assert.DoesNotContain(inner1, capturedOuter.StdOut);
+        Assert.DoesNotContain(inner2, capturedOuter.StdOut);
     }
 
     // When this test is run manually, it always succeeds.

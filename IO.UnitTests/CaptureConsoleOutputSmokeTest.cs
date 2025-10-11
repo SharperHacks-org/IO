@@ -47,24 +47,24 @@ public class CaptureConsoleOutputSmokeTest
                 {
                     Console.WriteLine(line1);
                     Console.WriteLine(line2);
-                    Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
-                    Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
+                    Assert.Contains(line1, captured.StdOut, Code.AtLineNumber());
+                    Assert.Contains(line2, captured.StdOut, Code.AtLineNumber());
 
                     captured.PreviousStdOut.WriteLine(previousString);
-                    Assert.IsTrue(swOut.ToString().Contains(previousString), Code.AtLineNumber());
+                    Assert.Contains(previousString, swOut.ToString(), Code.AtLineNumber());
                 }
 
                 const string inbetweenString = "Inbetween redirects";
 
                 Console.WriteLine(inbetweenString);
-                Assert.IsTrue(swOut.ToString().Contains(inbetweenString));
+                Assert.Contains(inbetweenString, swOut.ToString());
 
                 using (var captured = new CaptureConsoleOutput(3000))
                 {
                     Console.WriteLine(line1);
                     Console.WriteLine(line2);
-                    Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
-                    Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
+                    Assert.Contains(line1, captured.StdOut, Code.AtLineNumber());
+                    Assert.Contains(line2, captured.StdOut, Code.AtLineNumber());
                 }
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ public class CaptureConsoleOutputSmokeTest
             {
                 var done = "Done?";
                 Console.WriteLine(done);
-                Assert.IsTrue(swOut.ToString().Contains(done), Code.AtLineNumber());
+                Assert.Contains(done, swOut.ToString(), Code.AtLineNumber());
                 Console.SetOut(previousOut);
                 Console.SetError(previousError);
             }
@@ -112,8 +112,8 @@ public class CaptureConsoleOutputSmokeTest
 
             Console.WriteLine(line1);
             Console.WriteLine(line2);
-            Assert.IsTrue(captured.StdOut.Contains(line1), Code.AtLineNumber());
-            Assert.IsTrue(captured.StdOut.Contains(line2), Code.AtLineNumber());
+            Assert.Contains(line1, captured.StdOut, Code.AtLineNumber());
+            Assert.Contains(line2, captured.StdOut, Code.AtLineNumber());
 
             var thread = new Thread(ThisThreadWillCatchTimeoutException);
             thread.Start();

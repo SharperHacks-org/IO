@@ -39,7 +39,7 @@ public class TempDirectorySmokeTests //: TestBase
         {
             var dirRoot = tmpDir.DirectoryInfo.FullName;
             var tmpRoot = Path.GetTempPath();
-            Assert.IsTrue(dirRoot.StartsWith(tmpRoot));
+            Assert.StartsWith(tmpRoot, dirRoot);
 
             foreach (var subDir in _subDirs)
             {
@@ -59,7 +59,7 @@ public class TempDirectorySmokeTests //: TestBase
         {
             directoryPath = tmpDir.DirectoryInfo.FullName;
             Assert.IsTrue(Directory.Exists(directoryPath));
-            Assert.IsTrue(directoryPath.Contains(prefix));
+            Assert.Contains(prefix, directoryPath);
         }
 
         Assert.IsFalse(Directory.Exists(directoryPath));
@@ -68,7 +68,7 @@ public class TempDirectorySmokeTests //: TestBase
         {
             var dirRoot = tmpDir.DirectoryInfo.FullName;
             var tmpRoot = Path.GetTempPath();
-            Assert.IsTrue(dirRoot.StartsWith(tmpRoot));
+            Assert.StartsWith(tmpRoot, dirRoot);
 
             foreach (var subDir in _subDirs)
             {
@@ -98,7 +98,7 @@ public class TempDirectorySmokeTests //: TestBase
         {
             var dirRoot = tmpDir.DirectoryInfo.FullName;
             var tmpRoot = Path.GetTempPath();
-            Assert.IsTrue(dirRoot.StartsWith(tmpRoot));
+            Assert.StartsWith(tmpRoot, dirRoot);
 
             foreach (var subDir in _subDirs)
             {
@@ -127,13 +127,13 @@ public class TempDirectorySmokeTests //: TestBase
         {
             directoryPath = tmpDir.DirectoryInfo.FullName;
             Assert.IsTrue(Directory.Exists(directoryPath));
-            Assert.IsTrue(directoryPath.Contains(prefix));
+            Assert.Contains(prefix, directoryPath);
 
             subdirectories.Add(tmpDir.CreateSubdirectory().FullName);
             subdirectories.Add(tmpDir.CreateSubdirectory(prefix).FullName);
             subdirectories.Add(tmpDir.CreateNamedSubdirectory(subDirectoryName).FullName);
 
-            Assert.AreEqual(3, subdirectories.Count);
+            Assert.HasCount(3, subdirectories);
             
             foreach (var path in subdirectories)
             {

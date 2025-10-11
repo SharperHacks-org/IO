@@ -41,7 +41,7 @@ public class FileHelpersSmokeTests //: TestBase
         catch (ArgumentException ex)
         {
             exceptionCaught = true;
-            Assert.IsTrue(ex.Message.Contains("Missing specifier."));
+            Assert.Contains("Missing specifier.", ex.Message);
         }
         Assert.IsTrue(exceptionCaught);
 
@@ -54,7 +54,7 @@ public class FileHelpersSmokeTests //: TestBase
         catch (ArgumentException ex)
         {
             exceptionCaught = true;
-            Assert.IsTrue(ex.Message.Contains("Malformed specifier"));
+            Assert.Contains("Malformed specifier", ex.Message);
         }
         Assert.IsTrue(exceptionCaught);
 

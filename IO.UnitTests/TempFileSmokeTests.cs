@@ -24,7 +24,7 @@ public class TempFileSmokeTests //: TestBase
     private static string CheckExistsAndInTempPath(TempFile tempFile)
     {
         var filePathName = CheckExists(tempFile);
-        Assert.IsTrue(filePathName.StartsWith(Path.GetTempPath()));
+        Assert.StartsWith(Path.GetTempPath(), filePathName);
 
         return filePathName;
     }
@@ -34,7 +34,7 @@ public class TempFileSmokeTests //: TestBase
         Verify.IsNotNull(tempDirectory);
         var filePathName = CheckExists(tempFile);
         Assert.IsTrue(File.Exists(filePathName));
-        Assert.IsTrue(filePathName.StartsWith(tempDirectory.DirectoryInfo.FullName));
+        Assert.StartsWith(tempDirectory.DirectoryInfo.FullName, filePathName);
 
         return filePathName;
     }
@@ -80,7 +80,7 @@ public class TempFileSmokeTests //: TestBase
         using (var tempFile = new TempFile(prefix, string.Empty))
         {
             filePathName = CheckExistsAndInTempPath(tempFile);
-            Assert.IsTrue(tempFile.FileInfo.Name.StartsWith(prefix));
+            Assert.StartsWith(prefix, tempFile.FileInfo.Name);
             Assert.IsTrue(string.IsNullOrEmpty(tempFile.FileInfo.Extension));
         }
         Assert.IsFalse(File.Exists(filePathName));
@@ -89,11 +89,11 @@ public class TempFileSmokeTests //: TestBase
         using (var tempFile = new TempFile(prefix, extension))
         {
             filePathName = CheckExistsAndInTempPath(tempFile);
-            Assert.IsTrue(tempFile.FileInfo.Name.StartsWith(prefix));
-            Assert.IsTrue(tempFile.FileInfo.Extension.StartsWith('.'));
-            Assert.IsTrue(tempFile.FileInfo.Extension.EndsWith(extension));
+            Assert.StartsWith(prefix, tempFile.FileInfo.Name);
+            Assert.StartsWith(".", tempFile.FileInfo.Extension);
+            Assert.EndsWith(extension, tempFile.FileInfo.Extension);
             var tokens = tempFile.FileInfo.FullName.Split('.');
-            Assert.AreEqual(2, tokens.Length);
+            Assert.HasCount(2, tokens);
         }
         Assert.IsFalse(File.Exists(filePathName));
 
@@ -101,10 +101,10 @@ public class TempFileSmokeTests //: TestBase
         using (var tempFile = new TempFile(string.Empty, extension))
         {
             filePathName = CheckExistsAndInTempPath(tempFile);
-            Assert.IsTrue(tempFile.FileInfo.Extension.StartsWith('.'));
-            Assert.IsTrue(tempFile.FileInfo.Extension.EndsWith(extension));
+            Assert.StartsWith(".", tempFile.FileInfo.Extension);
+            Assert.EndsWith(extension, tempFile.FileInfo.Extension);
             var tokens = tempFile.FileInfo.FullName.Split('.');
-            Assert.AreEqual(2, tokens.Length);
+            Assert.HasCount(2, tokens);
         }
         Assert.IsFalse(File.Exists(filePathName));
     }
@@ -164,8 +164,8 @@ public class TempFileSmokeTests //: TestBase
         {
             using var tempFile = new TempFile(tempDirectory.DirectoryInfo, prefix, extension);
             filePathName = CheckExistsAndInTempDirectory(tempFile, tempDirectory);
-            Assert.IsTrue(tempFile.FileInfo.Name.StartsWith(prefix));
-            Assert.IsTrue(tempFile.FileInfo.Extension.EndsWith(extension));
+            Assert.StartsWith(prefix, tempFile.FileInfo.Name);
+            Assert.EndsWith(extension, tempFile.FileInfo.Extension);
         }
         Assert.IsFalse(File.Exists(filePathName));
     }

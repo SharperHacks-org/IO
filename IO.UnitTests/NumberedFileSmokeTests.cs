@@ -70,7 +70,7 @@ public class NumberedFileSmokeTests
                         separator,
                         floor
                         );
-                Assert.IsTrue(result.Name.Contains(count.ToString()));
+                Assert.Contains(count.ToString(), result.Name);
                 Assert.IsTrue(File.Exists(result.Name));
                 Assert.IsTrue(result.CanRead);
                 Assert.IsTrue(result.CanWrite);
