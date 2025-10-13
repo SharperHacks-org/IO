@@ -12,7 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Deterministic)' == 'true' And '$(PathMap)' == ''">
-    <PathMap>$(SolutionDir)={$(PathMapRoot)/$(SolutionName)}/</PathMap>   
+    <PathMap>$(SolutionDir)={$(PathMapRoot)/$(SolutionName)}/</PathMap>
+    <TargetFrameworks>$(BaseTargetFrameworks);$(VS2022TargetFrameWorks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>

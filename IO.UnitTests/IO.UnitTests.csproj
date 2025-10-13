@@ -5,10 +5,11 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <TargetFrameworks>$(BaseTargetFrameworks);$(VS2022TargetFrameWorks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Deterministic)' == 'true' And '$(PathMap)' == ''">
-    <PathMap>$(SolutionDir)={$(PathMapRoot)/$(SolutionName)}/</PathMap>   
+    <PathMap>$(SolutionDir)={$(PathMapRoot)/$(SolutionName)}/</PathMap>
   </PropertyGroup>
 
   <PropertyGroup>
