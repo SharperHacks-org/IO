@@ -6,8 +6,6 @@
 // Investigate why MsTest will not run both of these with the rest of the tests.
 // 
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;

@@ -2,8 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using SharperHacks.CoreLibs.Reflection;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;

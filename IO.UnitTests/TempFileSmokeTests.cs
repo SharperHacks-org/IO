@@ -3,8 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using SharperHacks.CoreLibs.Constraints;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;

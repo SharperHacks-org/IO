@@ -2,8 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace SharperHacks.CoreLibs.IO.UnitTests;
 
 [ExcludeFromCodeCoverage()]

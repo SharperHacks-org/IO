@@ -45,6 +45,8 @@ public class LockFile : IDisposable
                         FileAccess.ReadWrite,
                         FileShare.None);
 
+                // ToDo: Write timestamp, process path/name/Id and thread Id.
+
                 return;
             }
             catch (IOException)

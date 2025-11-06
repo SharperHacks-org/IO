@@ -2,8 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using SharperHacks.CoreLibs.Constraints;
 
 namespace SharperHacks.CoreLibs.IO.UnitTests;

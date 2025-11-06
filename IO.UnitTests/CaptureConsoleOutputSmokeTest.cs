@@ -1,7 +1,5 @@
 // Copyright and trademark notices at the end of this file.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System.Diagnostics.CodeAnalysis;
 
 using SharperHacks.CoreLibs.Reflection;
