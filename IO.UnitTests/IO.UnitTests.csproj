@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <TargetFrameworks>$(BaseTargetFrameworks);$(VS2022TargetFrameWorks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Deterministic)' == 'true' And '$(PathMap)' == ''">
@@ -30,23 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IO\IO\IO.csproj" />
+    <ProjectReference Include="..\IO\IO.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
 
 </Project>

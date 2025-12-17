@@ -14,6 +14,6 @@
     <File Path="SHLLC-Logo.128.100.jpg" />
     <File Path="SHLLC-Logo.jpg" />
   </Folder>
-  <Project Path="IO.UnitTests/IO.UnitTests.csproj" />
   <Project Path="IO/IO.csproj" />
+  <Project Path="IO.UnitTests/IO.UnitTests.csproj" />
 </Solution>
