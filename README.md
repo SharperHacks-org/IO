@@ -1,4 +1,4 @@
-![SharperHacks logo](SHLLC-Logo.jpg)
+![SharperHacks logo](https://raw.githubusercontent.com/SharperHacks-org/Assets/main/Images/SHLLC-Logo.png)
 # IO Library for .NET
 ## SharperHacks.CoreLibs.IO
 

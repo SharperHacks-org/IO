@@ -17,15 +17,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.1.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="SharperHacks.CoreLibs.Constraints" Version="5.1.0" />
     <PackageReference Include="SharperHacks.CoreLibs.Reflection" Version="5.1.5" />
-    <PackageReference Include="SharperHacks.CoreLibs.ShellExec" Version="0.9.5" />
+    <PackageReference Include="SharperHacks.CoreLibs.ShellExec" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
